@@ -6,11 +6,23 @@
 #include <utility>
 #include <vector>
 #include <utility>
+#include <array>
 #include "TokenType.h"
 #include "Token.h"
 
 class Lexer {
-    const std::string OPERATOR_CHARS = "+-*/()";
+    constexpr static std::array<char, 6> OPERATOR_CHARS = {
+            '+', '-', '*', '/', '(', ')'
+    };
+
+    constexpr static std::array<TokenType, 6> OPERATOR_TOKENS = {
+            TokenType::PLUS, TokenType::MINUS, TokenType::STAR,
+            TokenType::SLASH, TokenType::LPAREN, TokenType::RPAREN
+    };
+
+    static_assert(OPERATOR_CHARS.size() == OPERATOR_TOKENS.size(),
+                  "OPERATOR_CHARS and OPERATOR_TOKENS must have the same size");
+
     const std::string input;
     const int input_length;
     std::vector<Token> tokens;
@@ -20,9 +32,17 @@ class Lexer {
     void add_token(TokenType type);
     char peek(int relative_position);
     char next();
+
+    void tokenize_number();
+    bool is_operator(char cur);
+    void tokenize_operator();
+
+
+
 public:
     explicit Lexer(const std::string& input);
     std::vector<Token> tokenize();
+
 
 
 };
