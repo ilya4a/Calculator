@@ -3,4 +3,9 @@ project(Calculator)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Calculator main.cpp)
+add_executable(Calculator main.cpp
+        src/Lexer.cpp
+        src/Lexer.h
+        src/TokenType.h
+        src/Token.cpp
+        src/Token.h)
