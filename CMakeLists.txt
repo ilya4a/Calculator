@@ -8,4 +8,13 @@ add_executable(Calculator main.cpp
         src/Lexer.h
         src/TokenType.h
         src/Token.cpp
-        src/Token.h)
+        src/Token.h
+        src/Parser.cpp
+        src/Parser.h
+        src/expr/Expression.h
+        src/expr/NumberExpression.cpp
+        src/expr/NumberExpression.h
+        src/expr/UnaryExpression.cpp
+        src/expr/UnaryExpression.h
+        src/expr/BinaryExpression.cpp
+        src/expr/BinaryExpression.h)
