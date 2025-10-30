@@ -8,7 +8,7 @@
 #include <memory>
 #include "Expression.h"
 
-class BinaryExpression : Expression{
+class BinaryExpression : public Expression{
     char operation;
     std::unique_ptr<Expression> expr1, expr2;
 

@@ -8,10 +8,10 @@
 #include "TokenType.h"
 
 class Token {
-    TokenType type;
     std::string text;
-
 public:
+    double convert_to_double() const;
+    TokenType type;
     Token(TokenType type, std::string text);
     friend std::ostream& operator<<(std::ostream& os, const Token& token);
 };

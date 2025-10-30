@@ -9,7 +9,7 @@
 #include <memory>
 #include "Expression.h"
 
-class UnaryExpression : Expression {
+class UnaryExpression : public Expression {
     char operation;
     std::unique_ptr<Expression> expr1;
 

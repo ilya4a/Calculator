@@ -34,6 +34,7 @@ std::vector<Token> Lexer::tokenize() {
             next();
         }
     }
+    add_token(TokenType::END_OF_FILE);
     return tokens;
 }
 
