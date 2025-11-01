@@ -1,9 +1,20 @@
 cmake_minimum_required(VERSION 3.31)
 project(Calculator)
-
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_executable(Calculator main.cpp
+set(PLUGINS_OUTPUT_DIR "${CMAKE_SOURCE_DIR}/plugins")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PLUGINS_OUTPUT_DIR}")
+
+foreach(OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
+    string(TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} "${CMAKE_SOURCE_DIR}")
+    set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} "${PLUGINS_OUTPUT_DIR}")
+endforeach()
+
+add_executable(Calculator
+        main.cpp
         src/Lexer.cpp
         src/Lexer.h
         src/TokenType.h
@@ -19,4 +30,11 @@ add_executable(Calculator main.cpp
         src/expr/BinaryExpression.cpp
         src/expr/BinaryExpression.h
         src/simple_calculator_tests.cpp
-        src/simple_calculator_tests.h)
+        src/simple_calculator_tests.h
+        src/PluginManager.cpp
+        src/PluginManager.h
+)
+
+add_subdirectory(plugins_src)
+
+add_dependencies(Calculator funsin funcos)
