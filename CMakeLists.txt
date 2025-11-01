@@ -17,4 +17,6 @@ add_executable(Calculator main.cpp
         src/expr/UnaryExpression.cpp
         src/expr/UnaryExpression.h
         src/expr/BinaryExpression.cpp
-        src/expr/BinaryExpression.h)
+        src/expr/BinaryExpression.h
+        src/simple_calculator_tests.cpp
+        src/simple_calculator_tests.h)
