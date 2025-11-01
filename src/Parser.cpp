@@ -89,6 +89,13 @@ std::unique_ptr<Expression> Parser::primary() {
     const Token cur = peek(0);
     if (math_token_with_current(TokenType::NUMBER)) {
         return std::make_unique<NumberExpression>(cur.convert_to_double());
+    }else if(math_token_with_current(TokenType::LPAREN)){
+        std::unique_ptr<Expression> res = expression();
+        if(math_token_with_current(TokenType::RPAREN)){
+            return res;
+        }else{
+            throw std::runtime_error("Invalid bracket expression");
+        }
     }
     throw std::runtime_error("Unexpected token in primary()");
 }
