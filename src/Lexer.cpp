@@ -22,11 +22,8 @@ char Lexer::next() {
 }
 
 std::vector<Token> Lexer::tokenize() {
-//    int o = 0;
     while(current_position < input_length){
-//        o++;
         char current_char = peek(0);
-//        printf("\n %d char: %c'",o,  current_char);
         if(std::isdigit(static_cast<unsigned char>(current_char))) tokenize_number();
         else if(is_operator(current_char)){
             tokenize_operator();
@@ -38,6 +35,19 @@ std::vector<Token> Lexer::tokenize() {
     return tokens;
 }
 
+bool Lexer::check_number(std::string &num) {
+
+    if(num[0] == '.') return false;
+    if(num[num.size() - 1] == '.') num.erase(num.size() - 1, 1);
+
+    int num_of_points = 0;
+    for(int i = 1; i < num.size(); i++){
+        if(num[i] == '.') num_of_points++;
+    }
+
+    return num_of_points <= 1;
+}
+
 void Lexer::tokenize_number() {
     std::string str = "";
 
@@ -45,6 +55,9 @@ void Lexer::tokenize_number() {
     while(std::isdigit(static_cast<unsigned char>(cur)) || cur == '.'){ // throw exception 2.4. 3..4 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         str += cur;
         cur = next();
+    }
+    if(!check_number(str)){
+        throw std::runtime_error("invalid format of number");
     }
     add_token(TokenType::NUMBER, std::move(str));
 }
@@ -68,4 +81,5 @@ void Lexer::tokenize_operator() {
         j++;
     }
 }
+
 

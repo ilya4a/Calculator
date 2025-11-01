@@ -37,6 +37,7 @@ class Lexer {
     bool is_operator(char cur);
     void tokenize_operator();
 
+    bool check_number(std::string &num);
 
 
 public:
