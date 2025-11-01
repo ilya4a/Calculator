@@ -6,6 +6,7 @@
 #include "Parser.h"
 #include "expr/NumberExpression.h"
 #include "expr/BinaryExpression.h"
+#include "expr/UnaryExpression.h"
 
 
 Parser::Parser(std::vector<Token> toks)
@@ -76,6 +77,11 @@ std::unique_ptr<Expression> Parser::multiplicative() {
 }
 
 std::unique_ptr<Expression> Parser::unary() {
+    if(math_token_with_current(TokenType::PLUS)){
+        return std::make_unique<UnaryExpression>('+', primary());
+    }else if(math_token_with_current(TokenType::MINUS)){
+        return std::make_unique<UnaryExpression>('-', primary());
+    }
     return primary();
 }
 

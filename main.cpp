@@ -3,7 +3,7 @@
 #include "src/Parser.h"
 
 int main() {
-    Lexer a("1 + 3*6 +11 +100*5");
+    Lexer a("1 + 3*6 +11 +100* -5");
     std::vector<Token> v = a.tokenize();
     for(auto &i: v){
         std::cout << i << std::endl;
