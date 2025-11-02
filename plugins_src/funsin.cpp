@@ -3,13 +3,12 @@
 //
 
 #include <cmath>
-#include <string>
 #include "../plugin_interface.h"
 
 int eval(const double* args, int nargs, double* out){
     if(nargs != 1) return 1;
     double deg = args[0];
-    double rad = deg * M_PI / 180.0;
+    // double rad = deg * M_PI / 180.0;
     *out = sin(deg);
     return 0;
 }

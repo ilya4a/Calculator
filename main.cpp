@@ -24,7 +24,7 @@ int main() {
 //    start();
     PluginManager pm;
     pm.load_all_plugins("plugins");
-    std::shared_ptr<Plugin> plugin = pm.get_plugin("sin");
+    std::shared_ptr<Plugin> plugin = pm.get_plugin("cos");
     double args[1] = {3.14};
     double res;
     plugin->eval(args, 1, &res);

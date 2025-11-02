@@ -4,7 +4,6 @@
 #ifndef CALCULATOR_PLUGINMANAGER_H
 #define CALCULATOR_PLUGINMANAGER_H
 
-#include <dlfcn.h>
 #include <string>
 #include <unordered_map>
 
@@ -24,11 +23,11 @@
 
 class PluginManager {
 
-    #ifdef _WIN32
-        using LibraryHandle = HMODULE;
-    #else
-        using LibraryHandle = void*;
-    #endif
+#ifdef _WIN32
+    using LibraryHandle = HMODULE;
+#else
+    using LibraryHandle = void*;
+#endif
 
 
     LibraryHandle load_library(const std::string &path);
