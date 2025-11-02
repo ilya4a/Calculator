@@ -2,6 +2,7 @@
 #include "src/Lexer.h"
 #include "src/Parser.h"
 #include "src/simple_calculator_tests.h"
+#include "src/PluginManager.h"
 
 void start(){
     Lexer a(" 1 1");
@@ -20,5 +21,8 @@ void start(){
 
 int main() {
 //    simple_calc_tests();
-    start();
+//    start();
+    PluginManager pm;
+    pm.load_all_plugins("plugins");
+
 }

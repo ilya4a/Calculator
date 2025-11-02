@@ -33,6 +33,7 @@ add_executable(Calculator
         src/simple_calculator_tests.h
         src/PluginManager.cpp
         src/PluginManager.h
+        plugin_interface.h
 )
 
 add_subdirectory(plugins_src)

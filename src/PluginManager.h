@@ -1,7 +1,6 @@
 //
 // Created by ilya on 11/1/25.
 //
-
 #ifndef CALCULATOR_PLUGINMANAGER_H
 #define CALCULATOR_PLUGINMANAGER_H
 
@@ -9,24 +8,33 @@
 #include <string>
 #include <unordered_map>
 
-struct Plugin {
-    std::string name;
-    int num_of_args;
-    using PluginFunction = int (*)(const double *, int, double *, char *, int);
-    PluginFunction eval = nullptr;
-};
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <dlfcn.h>
+#include <vector>
+#include "../plugin_interface.h"
 
+#endif
+//    #ifdef _WIN32
+//        HMODULE handle = nullptr;
+//    #else
+//        void* handle = nullptr;
+//    #endif
 class PluginManager {
+
+    std::unordered_map<std::string, Plugin> plugins;
+
+public:
+
     PluginManager() = default;
     ~PluginManager();
 
-    void load_all_plugins();
-    void has_plugin(const std::string &name);
-    Plugin get_plagin(const std::string &name);
+    void load_all_plugins(const std::string& dir);
+    bool has_plugin(const std::string &name);
+    Plugin* get_plugin(const std::string &name);
 
-private:
-    std::unordered_map<std::string, Plugin> plugins;
+    std::vector<std::string> list();
 };
-
 
 #endif //CALCULATOR_PLUGINMANAGER_H
