@@ -8,22 +8,34 @@
 #include <string>
 #include <unordered_map>
 
-#ifdef _WIN32
-#include <Windows.h>
-#else
-#include <dlfcn.h>
+#include <string>
 #include <vector>
+#include <memory>
+#include <filesystem>
 #include "../plugin_interface.h"
 
+#ifdef _WIN32
+#include <Windows.h>
+    #define LIB_EXT ".dll"
+#else
+#include <dlfcn.h>
+#define LIB_EXT ".so"
 #endif
-//    #ifdef _WIN32
-//        HMODULE handle = nullptr;
-//    #else
-//        void* handle = nullptr;
-//    #endif
+
 class PluginManager {
 
+    #ifdef _WIN32
+        using LibraryHandle = HMODULE;
+    #else
+        using LibraryHandle = void*;
+    #endif
+
+
+    LibraryHandle load_library(const std::string &path);
+    void close_library(LibraryHandle handle);
+    void *get_symbol(LibraryHandle handle, const std::string &symbol_name);
     std::vector<std::shared_ptr<Plugin>> plugins;
+    bool check_entry(std::filesystem::directory_entry entry);
 public:
 
     PluginManager() = default;

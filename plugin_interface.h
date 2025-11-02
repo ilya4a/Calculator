@@ -14,4 +14,20 @@ struct Plugin {
     PluginFunction eval = nullptr;
 };
 
+#ifdef _WIN32
+#ifdef PLUGIN_EXPORT
+        #define PLUGIN_API __declspec(dllexport)
+    #else
+        #define PLUGIN_API __declspec(dllimport)
+    #endif
+#else
+#define PLUGIN_API
+#endif
+
+extern "C" {
+PLUGIN_API Plugin* create_plugin();
+PLUGIN_API void destroy_plugin(Plugin*);
+}
+
+
 #endif //CALCULATOR_PLUGIN_INTERFACE_H
