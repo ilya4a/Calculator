@@ -23,18 +23,15 @@
 //    #endif
 class PluginManager {
 
-    std::unordered_map<std::string, Plugin> plugins;
-
+    std::vector<std::shared_ptr<Plugin>> plugins;
 public:
 
     PluginManager() = default;
-    ~PluginManager();
 
     void load_all_plugins(const std::string& dir);
-    bool has_plugin(const std::string &name);
-    Plugin* get_plugin(const std::string &name);
 
-    std::vector<std::string> list();
+    std::shared_ptr<Plugin> get_plugin(const std::string &name);
+
 };
 
 #endif //CALCULATOR_PLUGINMANAGER_H
