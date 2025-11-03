@@ -40,6 +40,6 @@ void start_program(){
 
 
 int main() {
-//    start_program();
-    test();
+    start_program();
+//    test();
 }

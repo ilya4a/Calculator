@@ -6,7 +6,8 @@
 #include "../plugin_interface.h"
 
 int eval(const double* args, int nargs, double* out){
-    if(nargs != 1) return 1;
+
+    if(nargs != 1 || args == nullptr || out == nullptr) return 1;
     double deg = args[0];
     // double rad = deg * M_PI / 180.0;
     *out = cos(deg);

@@ -10,17 +10,6 @@
 #define PLUGIN_EXPORT
 #endif
 
-
-// #ifdef _WIN32
-//     #ifdef BUILD_PLUGIN
-//         #define PLUGIN_API __declspec(dllexport)
-//     #else
-//         #define PLUGIN_API __declspec(dllimport)
-//     #endif
-// #else
-//     #define PLUGIN_API
-// #endif
-
 struct Plugin {
     const char*  name;
     int num_of_args;
