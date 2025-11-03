@@ -34,6 +34,8 @@ class Parser {
     public:
         explicit Parser(std::vector<Token> toks);
         std::vector<std::unique_ptr<Expression>> parse();
+
+    std::unique_ptr<Expression> power();
 };
 
 

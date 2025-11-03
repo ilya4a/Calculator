@@ -1,2 +1,5 @@
 cmake-build-debug/
 .idea/
+
+plugins/*
+!plugins/.gitkeep

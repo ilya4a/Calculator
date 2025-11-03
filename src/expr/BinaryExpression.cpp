@@ -2,6 +2,7 @@
 // Created by ilya on 10/30/25.
 //
 
+#include <valarray>
 #include "BinaryExpression.h"
 
 std::string BinaryExpression::get_string() const {
@@ -13,6 +14,15 @@ double BinaryExpression::eval() const {
         case '-': return expr1->eval() - expr2->eval();
         case '*': return expr1->eval() * expr2->eval();
         case '/': return expr1->eval() / expr2->eval();
+        case '^':{
+            double res = std::pow(expr1->eval(), expr2->eval());
+
+            if (std::isnan(res) || !std::isfinite(res)) {
+                throw std::runtime_error("incorrect power arguments");
+            }
+
+            return std::pow(expr1->eval(), expr2->eval());
+        }
         default: return expr1->eval() + expr2->eval();
     }
     return 0;

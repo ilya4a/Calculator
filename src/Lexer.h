@@ -11,13 +11,13 @@
 #include "Token.h"
 
 class Lexer {
-    constexpr static std::array<char, 6> OPERATOR_CHARS = {
-            '+', '-', '*', '/', '(', ')'
+    constexpr static std::array<char, 7> OPERATOR_CHARS = {
+            '+', '-', '*', '/', '(', ')', '^'
     };
 
-    constexpr static std::array<TokenType, 6> OPERATOR_TOKENS = {
+    constexpr static std::array<TokenType, 7> OPERATOR_TOKENS = {
             TokenType::PLUS, TokenType::MINUS, TokenType::STAR,
-            TokenType::SLASH, TokenType::LPAREN, TokenType::RPAREN
+            TokenType::SLASH, TokenType::LPAREN, TokenType::RPAREN, TokenType::CARET
     };
 
     static_assert(OPERATOR_CHARS.size() == OPERATOR_TOKENS.size(),

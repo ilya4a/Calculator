@@ -78,12 +78,23 @@ std::unique_ptr<Expression> Parser::multiplicative() {
 
 std::unique_ptr<Expression> Parser::unary() {
     if(math_token_with_current(TokenType::PLUS)){
-        return std::make_unique<UnaryExpression>('+', primary());
+        return std::make_unique<UnaryExpression>('+', unary());
     }else if(math_token_with_current(TokenType::MINUS)){
-        return std::make_unique<UnaryExpression>('-', primary());
+        return std::make_unique<UnaryExpression>('-', unary());
     }
-    return primary();
+    return power();
 }
+
+std::unique_ptr<Expression> Parser::power() {
+
+    std::unique_ptr<Expression> left = primary();
+    if (math_token_with_current(TokenType::CARET)) {
+        std::unique_ptr<Expression> right = power();
+        return std::make_unique<BinaryExpression>('^', std::move(left), std::move(right));
+    }
+    return left;
+}
+
 
 std::unique_ptr<Expression> Parser::parse_function() {
 

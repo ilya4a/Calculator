@@ -6,7 +6,8 @@
 
 void start(){
 //    Lexer a(" pow(2 + 3*cos(0), 3) - 25*sin(3.14/2 + 1 *0) ");
-    Lexer a(" ln( 2) * pow(2, 1.5 *2) + 0.12");
+//    Lexer a(" --2 ^ sin(3.12)");
+    Lexer a(" (-2) ^ 0.5");
     std::vector<Token> v = a.tokenize();
     for(auto &i: v){
         std::cout << i << std::endl;
