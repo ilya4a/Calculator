@@ -10,6 +10,8 @@ int eval(const double* args, int nargs, double* out){
     double deg = args[0];
     // double rad = deg * M_PI / 180.0;
     *out = cos(deg);
+    if (std::isnan(*out) || !std::isfinite(*out)) return 2;
+
     return 0;
 }
 

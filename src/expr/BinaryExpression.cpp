@@ -6,7 +6,7 @@
 #include "BinaryExpression.h"
 
 std::string BinaryExpression::get_string() const {
-    return expr1->get_string() + operation + expr2->get_string();
+    return expr1->get_string() + " " + operation + " " + expr2->get_string();
 }
 
 double BinaryExpression::eval() const {

@@ -1,15 +1,18 @@
 //
-// Created by ilya on 11/1/25.
+// Created by ilya on 11/4/25.
 //
 
 #include <cmath>
 #include "../plugin_interface.h"
 
 int eval(const double* args, int nargs, double* out){
-    if(nargs != 1) return 1;
-    double deg = args[0];
-    // double rad = deg * M_PI / 180.0;
-    *out = sin(deg);
+
+    if(nargs != 1 || args == nullptr || out == nullptr) return 1;
+
+    constexpr double PI = 3.14159265358979323846;
+
+    *out = args[0] * PI / 180.0;
+
     if (std::isnan(*out) || !std::isfinite(*out)) return 2;
 
     return 0;
@@ -18,7 +21,7 @@ int eval(const double* args, int nargs, double* out){
 extern "C" Plugin * create_plugin(){
     Plugin* p = new Plugin;
     p->num_of_args = 1;
-    p->name = "sin";
+    p->name = "deg";
     p->eval = eval;
     return p;
 }

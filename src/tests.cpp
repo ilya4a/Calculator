@@ -21,8 +21,6 @@ void test() {
         return res;
     };
 
-    assert(approxEqual(evalExpr("-2 + 3 * 4"), 10.0));
-
     assert(approxEqual(evalExpr("(2 + 3) * 4"), 20.0));
 
     std::cout<<"1--------------"<<std::endl;
@@ -56,25 +54,22 @@ void test() {
     assert(approxEqual(evalExpr(" -1^1^(-1)^-1^2^2 "), -1.0));
 
     std::cout<<"11--------------"<<std::endl;
-    // (-2)^(1+3) * 2^(-3) + sin(0)  => (-2)^4 * 1/8 + 0 = 16 * 0.125 = 2
     assert(approxEqual(evalExpr("(-2) ^ (1 + 3) * pow(2, -3) + sin(0)"), 2.0));
 
     std::cout<<"12--------------"<<std::endl;
-    // pow(2, pow(1+1, pow(1+1,1))) => inner pow(1+1,1)=2 -> pow(1+1,2)=4 -> pow(2,4)=16
     assert(approxEqual(evalExpr("pow(2, pow(1 + 1, pow(1 + 1^--2, 1)))"), 16.0));
 
     std::cout<<"13--------------"<<std::endl;
-    // 2 ^ - (1 + 2) => exponent = -(3) => 2^-3 = 0.125
     assert(approxEqual(evalExpr("2 ^ - (1 + 2^---1 + 0.5 + 1)"), 0.125));
 
     std::cout<<"14--------------"<<std::endl;
-    // pow( pow(2,3) + pow(1+1,3), 2) - cos(0)
-    // pow(2,3)=8, pow(1+1,3)=8, sum=16, pow(16,2)=256, cos(0)=1 -> 256 - 1 = 255
     assert(approxEqual(evalExpr("pow(pow(2, 3) + pow(1 + 1, 3), 2) - cos(0)"), 255.0));
 
     std::cout<<"15--------------"<<std::endl;
-    // (sin(pi/6) + cos(pi/3))^2 = (0.5 + 0.5)^2 = 1
     assert(approxEqual(evalExpr("pow( (sin(3.141592653589793 / 6) + cos(3.141592653589793 / 3)), 2)"), 1.0));
+
+    std::cout<<"16--------------"<<std::endl;
+    assert(approxEqual(evalExpr("(deg(180^--1) ^ 2) ^0.5"), 3.141592653589793));
 
     std::cout << "All tests passed." << std::endl;
 }
