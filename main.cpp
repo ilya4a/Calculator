@@ -1,39 +1,45 @@
 #include <iostream>
 #include "src/Lexer.h"
 #include "src/Parser.h"
-#include "src/simple_calculator_tests.h"
+#include "src/tests.h"
 #include "src/PluginManager.h"
 
-void start(){
-//    Lexer a(" pow(2 + 3*cos(0), 3) - 25*sin(3.14/2 + 1 *0) ");
-//    Lexer a(" --2 ^ sin(3.12)");
-    Lexer a(" (-2) ^ 0.5");
-    std::vector<Token> v = a.tokenize();
-    for(auto &i: v){
-        std::cout << i << std::endl;
-    }
+void start_program(){
 
-    Parser p(v);
+    PluginManager pm;
+    pm.load_all_plugins("plugins");
 
-    try{
-        auto exprs = p.parse();
-        for (std::unique_ptr<Expression> &i: exprs) {
-            printf("\n%s = %f", i->get_string().c_str(), i->eval());
+    std::string input;
+    std::cout<<"to exit, enter the q"<<std::endl;
+    std::cout<<"to show the list of available functions, enter the f"<<std::endl;
+
+    while(true){
+        std::cout<< std::endl << "enter the expression: ";
+        std::getline(std::cin, input);
+        if(input == "q") break;
+        if(input == "f") {
+            std::cout<<std::endl<<"available functions:"<<std::endl;
+            for(auto &i: pm.get_list_of_function_names() ){
+                std::cout<<i<<std::endl;
+            }
+            continue;
         }
-    }catch(const std::runtime_error& e){
-        std::cerr<<e.what()<<std::endl;
+        Lexer lexer(input);
+        Parser p(lexer.tokenize(), pm);
+        try{
+            auto exprs = p.parse();
+            for (std::unique_ptr<Expression> &i: exprs) {
+                double val = i->eval();
+                std::cout<<i->get_string()<< " = " << val << std::endl;
+            }
+        }catch(const std::runtime_error& e){
+            std::cout<<"ERROR: "<<e.what()<<std::endl;
+        }
     }
 }
 
 
 int main() {
-//    simple_calc_tests();
-    start();
-//    PluginManager pm;
-//    pm.load_all_plugins("plugins");
-//    std::shared_ptr<Plugin> plugin = pm.get_plugin("cos");
-//    double args[1] = {3.14};
-//    double res;
-//    plugin->eval(args, 1, &res);
-//    std::cout<<res<<std::endl;
+//    start_program();
+    test();
 }

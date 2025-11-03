@@ -40,8 +40,8 @@ public:
     PluginManager() = default;
 
     void load_all_plugins(const std::string& dir);
-
     std::shared_ptr<Plugin> get_plugin(const std::string &name);
+    std::vector<std::string> get_list_of_function_names();
 
 };
 

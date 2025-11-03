@@ -13,7 +13,15 @@ double BinaryExpression::eval() const {
     switch (operation) {
         case '-': return expr1->eval() - expr2->eval();
         case '*': return expr1->eval() * expr2->eval();
-        case '/': return expr1->eval() / expr2->eval();
+        case '/': {
+            double e2 = expr2->eval();
+            if(fabs(e2) < 1e-14){
+                throw std::runtime_error("division by zero");
+            }
+
+            double e1 = expr1->eval();
+            return e1/e2;
+        }
         case '^':{
             double res = std::pow(expr1->eval(), expr2->eval());
 

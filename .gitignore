@@ -3,3 +3,6 @@ cmake-build-debug/
 
 plugins/*
 !plugins/.gitkeep
+
+src/simple_calc_tests.cpp
+src/simple_calc_tests.h

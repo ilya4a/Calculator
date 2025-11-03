@@ -28,9 +28,11 @@ std::string FunctionExpression::get_string() const {
 double FunctionExpression::eval() const {
     double res = 0;
     int size = args.size();
+
     if(size != plugin->num_of_args){
-        std::cerr << "incorrect number if args of function: " << plugin->name << std::endl;
-        return 0;
+        std::string err = "FunctionExpression incorrect number of args of function: ";
+        err += plugin->name;
+        throw std::runtime_error(err);
     }
 
     double* num_args = new double[size];
@@ -41,17 +43,17 @@ double FunctionExpression::eval() const {
 
     int eval_res = plugin->eval(num_args, size, &res);
     if(eval_res == 1){
-        std::cerr << "error in call of function: " << plugin->name << std::endl;
+        std::string err = "FunctionExpression error in call of function: ";
+        err += plugin->name;
         delete[] num_args;
-        return 0;
+        throw std::runtime_error(err);
 
     }else if(eval_res == 2){
-        std::cerr << "invalid agrs in function: " << plugin->name << std::endl;
         delete[] num_args;
-        return 0;
+        std::string err = "FunctionExpression invalid agrs in function: ";
+        err += plugin->name;
+        throw std::runtime_error(err);
     }
-
-
 
     delete[] num_args;
     return res;

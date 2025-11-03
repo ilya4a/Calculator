@@ -4,6 +4,33 @@
 
 #include "simple_calculator_tests.h"
 
+//void start(){
+////    Lexer a(" pow(2 + 3*cos(0), 3) - 25*sin(3.14/2 + 1 *0) ");
+////    Lexer a(" --2 ^ sin(3.12)");
+////    Lexer a(" pow(2 + 3*cos(0), 3) - 25*sin(3.14/2 + 1 *0) ");
+////    Lexer a(" (-2)^-2");
+////    Lexer a(" pow(2 + 3*cos(0), 3) - 25*sin(3.14/2 + 1 -1^1^(-1)^-1) ");
+////    Lexer a("  -1^1^(-1)^-1^2^2 ");
+//    Lexer a("  2^--2");
+//    std::vector<Token> v = a.tokenize();
+//    for(auto &i: v){
+//        std::cout << i << std::endl;
+//    }
+//    PluginManager pm;
+//    pm.load_all_plugins("plugins");
+//    Parser p(v, pm);
+//
+//    try{
+//        auto exprs = p.parse();
+//        for (std::unique_ptr<Expression> &i: exprs) {
+//            printf("\n%s = %f", i->get_string().c_str(), i->eval());
+//        }
+//    }catch(const std::runtime_error& e){
+//        std::cerr<<e.what()<<std::endl;
+//    }
+//}
+
+
 bool approx_eq(double a, double b, double eps) {
     return std::fabs(a - b) <= eps;
 }
@@ -32,8 +59,9 @@ int simple_calc_tests() {
 
         Lexer lexer(expr);
         std::vector<Token> tokens = lexer.tokenize();
-
-        Parser parser(tokens);
+        PluginManager pm;
+        pm.load_all_plugins("plugins");
+        Parser parser(tokens, pm);
         auto exprs = parser.parse();
 
         assert(!exprs.empty() && "parse() вернул пустой список выражений");

@@ -32,7 +32,7 @@ class Parser {
     PluginManager pm;
 
     public:
-        explicit Parser(std::vector<Token> toks);
+        explicit Parser(std::vector<Token> toks, PluginManager &pluginManager);
         std::vector<std::unique_ptr<Expression>> parse();
 
     std::unique_ptr<Expression> power();

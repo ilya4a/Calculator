@@ -104,3 +104,11 @@ std::shared_ptr<Plugin> PluginManager::get_plugin(const std::string &name) {
     return nullptr;
 }
 
+std::vector<std::string> PluginManager::get_list_of_function_names() {
+    std::vector<std::string> res;
+    for(auto &i: plugins){
+        res.emplace_back(i->name);
+    }
+    return res;
+}
+

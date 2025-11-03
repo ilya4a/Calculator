@@ -10,13 +10,13 @@
 #include "expr/FunctionExpression.h"
 
 
-Parser::Parser(std::vector<Token> toks)
+Parser::Parser(std::vector<Token> toks, PluginManager &pluginManager)
         : END_OF_FILE(Token(TokenType::END_OF_FILE, "")),
           tokens(std::move(toks)),
           size(static_cast<int>(tokens.size()))
 {
+    pm = pluginManager;
     current_position = 0;
-    pm.load_all_plugins("plugins");
 }
 
 Token Parser::peek(int relative_position) {
@@ -76,6 +76,8 @@ std::unique_ptr<Expression> Parser::multiplicative() {
     return expr;
 }
 
+
+
 std::unique_ptr<Expression> Parser::unary() {
     if(math_token_with_current(TokenType::PLUS)){
         return std::make_unique<UnaryExpression>('+', unary());
@@ -89,12 +91,12 @@ std::unique_ptr<Expression> Parser::power() {
 
     std::unique_ptr<Expression> left = primary();
     if (math_token_with_current(TokenType::CARET)) {
-        std::unique_ptr<Expression> right = power();
+        std::unique_ptr<Expression> right = unary();
         return std::make_unique<BinaryExpression>('^', std::move(left), std::move(right));
     }
     return left;
-}
 
+}
 
 std::unique_ptr<Expression> Parser::parse_function() {
 
@@ -120,6 +122,7 @@ std::unique_ptr<Expression> Parser::parse_function() {
         }
     }
     else{
+
         throw std::runtime_error("Invalid bracket expression");
     }
 
@@ -142,7 +145,7 @@ std::unique_ptr<Expression> Parser::primary() {
             throw std::runtime_error("Invalid bracket expression");
         }
     }
-    throw std::runtime_error("Unexpected token in primary()");
+        throw std::runtime_error("Unexpected token in primary()");
 }
 
 

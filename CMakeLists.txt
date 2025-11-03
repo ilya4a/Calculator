@@ -44,6 +44,8 @@ add_executable(Calculator
         plugin_interface.h
         src/expr/FunctionExpression.cpp
         src/expr/FunctionExpression.h
+        src/tests.cpp
+        src/tests.h
 )
 
 if(UNIX)
