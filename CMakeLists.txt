@@ -42,6 +42,8 @@ add_executable(Calculator
         src/PluginManager.cpp
         src/PluginManager.h
         plugin_interface.h
+        src/expr/FunctionExpression.cpp
+        src/expr/FunctionExpression.h
 )
 
 if(UNIX)
@@ -50,4 +52,4 @@ if(UNIX)
 endif()
 
 add_subdirectory(plugins_src)
-add_dependencies(Calculator funsin funcos)
+add_dependencies(Calculator funsin funcos funpow)

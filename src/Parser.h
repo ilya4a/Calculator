@@ -10,27 +10,30 @@
 #include <memory>
 #include "Token.h"
 #include "expr/Expression.h"
+#include "PluginManager.h"
 
 class Parser {
+    const Token END_OF_FILE;
+    const std::vector<Token> tokens;
+    const int size;
+    int current_position;
 
-const Token END_OF_FILE;
-const std::vector<Token> tokens;
-const int size;
-int current_position;
+    Token peek(int relative_position);
 
-Token peek(int relative_position);
+    bool math_token_with_current(TokenType type);
 
-bool math_token_with_current(TokenType type);
+    std::unique_ptr<Expression> expression();
+    std::unique_ptr<Expression> additive();
+    std::unique_ptr<Expression> multiplicative();
+    std::unique_ptr<Expression> unary();
+    std::unique_ptr<Expression> primary();
+    std::unique_ptr<Expression> parse_function();
 
-std::unique_ptr<Expression> expression();
-std::unique_ptr<Expression> additive();
-std::unique_ptr<Expression> multiplicative();
-std::unique_ptr<Expression> unary();
-std::unique_ptr<Expression> primary();
+    PluginManager pm;
 
-public:
-    explicit Parser(std::vector<Token> toks);
-    std::vector<std::unique_ptr<Expression>> parse();
+    public:
+        explicit Parser(std::vector<Token> toks);
+        std::vector<std::unique_ptr<Expression>> parse();
 };
 
 

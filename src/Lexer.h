@@ -38,6 +38,8 @@ class Lexer {
     void tokenize_operator();
 
     bool check_number(std::string &num);
+    bool is_letter();
+    void tokenize_function();
 
 
 public:

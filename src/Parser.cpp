@@ -7,6 +7,7 @@
 #include "expr/NumberExpression.h"
 #include "expr/BinaryExpression.h"
 #include "expr/UnaryExpression.h"
+#include "expr/FunctionExpression.h"
 
 
 Parser::Parser(std::vector<Token> toks)
@@ -15,6 +16,7 @@ Parser::Parser(std::vector<Token> toks)
           size(static_cast<int>(tokens.size()))
 {
     current_position = 0;
+    pm.load_all_plugins("plugins");
 }
 
 Token Parser::peek(int relative_position) {
@@ -85,10 +87,44 @@ std::unique_ptr<Expression> Parser::unary() {
     return primary();
 }
 
+std::unique_ptr<Expression> Parser::parse_function() {
+
+    std::string function_name = peek(-1).text;
+
+    if(math_token_with_current(TokenType::LPAREN)){
+        std::vector<std::unique_ptr<Expression>> function_args;
+        bool last_comma = true;
+        int size = 0;
+        while(!math_token_with_current(TokenType::RPAREN)){
+
+            if(!last_comma) throw std::runtime_error("Invalid comma expression");
+
+            function_args.push_back(std::move(expression()));
+            size++;
+            last_comma = math_token_with_current(TokenType::COMMA);
+        }
+        std::shared_ptr<Plugin> plugin = pm.get_plugin(function_name);
+        if(plugin != nullptr){
+            return std::make_unique<FunctionExpression>(plugin, std::move(function_args));
+        }else{
+            throw std::runtime_error("invalid name of function");
+        }
+    }
+    else{
+        throw std::runtime_error("Invalid bracket expression");
+    }
+
+}
+
+
 std::unique_ptr<Expression> Parser::primary() {
     const Token cur = peek(0);
     if (math_token_with_current(TokenType::NUMBER)) {
         return std::make_unique<NumberExpression>(cur.convert_to_double());
+    }else if(math_token_with_current(TokenType::FUNCTION)){
+
+        return parse_function();
+
     }else if(math_token_with_current(TokenType::LPAREN)){
         std::unique_ptr<Expression> res = expression();
         if(math_token_with_current(TokenType::RPAREN)){
@@ -99,6 +135,7 @@ std::unique_ptr<Expression> Parser::primary() {
     }
     throw std::runtime_error("Unexpected token in primary()");
 }
+
 
 
 

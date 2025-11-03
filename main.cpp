@@ -5,7 +5,7 @@
 #include "src/PluginManager.h"
 
 void start(){
-    Lexer a(" 1 1");
+    Lexer a(" pow(2 + 3*cos(0), 3) - 25*sin(3.14/2 + 1 *0) ");
     std::vector<Token> v = a.tokenize();
     for(auto &i: v){
         std::cout << i << std::endl;
@@ -21,12 +21,12 @@ void start(){
 
 int main() {
 //    simple_calc_tests();
-//    start();
-    PluginManager pm;
-    pm.load_all_plugins("plugins");
-    std::shared_ptr<Plugin> plugin = pm.get_plugin("cos");
-    double args[1] = {3.14};
-    double res;
-    plugin->eval(args, 1, &res);
-    std::cout<<res<<std::endl;
+    start();
+//    PluginManager pm;
+//    pm.load_all_plugins("plugins");
+//    std::shared_ptr<Plugin> plugin = pm.get_plugin("cos");
+//    double args[1] = {3.14};
+//    double res;
+//    plugin->eval(args, 1, &res);
+//    std::cout<<res<<std::endl;
 }

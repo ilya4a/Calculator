@@ -21,13 +21,36 @@ char Lexer::next() {
     return peek(0);
 }
 
+bool Lexer::is_letter() {
+
+    return false;
+}
+
+
+void Lexer::tokenize_function() {
+    std::string name;
+    char c = peek(0);
+    while(std::isalpha(c)){
+        name += c;
+        c = next();
+    }
+    add_token(TokenType::FUNCTION, name);
+}
+
 std::vector<Token> Lexer::tokenize() {
     while(current_position < input_length){
         char current_char = peek(0);
         if(std::isdigit(static_cast<unsigned char>(current_char))) tokenize_number();
         else if(is_operator(current_char)){
             tokenize_operator();
-        }else{
+        }else if(current_char == ','){
+            add_token(TokenType::COMMA);
+            next();
+        }
+        else if(std::isalpha(current_char)){
+            tokenize_function();
+        }
+        else{
             next();
         }
     }
@@ -81,5 +104,7 @@ void Lexer::tokenize_operator() {
         j++;
     }
 }
+
+
 
 

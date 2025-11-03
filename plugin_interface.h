@@ -24,8 +24,6 @@
 struct Plugin {
     const char*  name;
     int num_of_args;
-    // using PluginFunction = int (*)(const double *, int, double *);
-    // PluginFunction eval = nullptr;
     int (*eval)(const double *args, int nargs, double *out);
 };
 

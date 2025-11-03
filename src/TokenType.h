@@ -12,6 +12,9 @@ enum class TokenType{
 
     LPAREN, // (
     RPAREN, // )
+
+    FUNCTION,
+    COMMA,
     END_OF_FILE
 };
 

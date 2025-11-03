@@ -11,6 +11,8 @@ std::ostream &operator<<(std::ostream &os, const Token &token) {
     if(token.type == TokenType::PLUS) t = "+";
     if(token.type == TokenType::MINUS) t = "-";
     if(token.type == TokenType::NUMBER) t = "NUMBER";
+    if(token.type == TokenType::FUNCTION) t = "FUNCTION";
+    if(token.type == TokenType::COMMA) t = "COMMA";
     if(token.type == TokenType::END_OF_FILE) t = "END_OF_FILE";
     os << "Token(" << t << ", \"" << token.text << "\")";
     return os;

@@ -35,30 +35,44 @@ void* PluginManager::get_symbol(LibraryHandle handle, const std::string& symbol_
 #endif
 }
 
+bool check_directory(std::filesystem::path path){
+    if (!std::filesystem::exists(path) || !std::filesystem::is_directory(path)) {
+        std::cerr << "Plugins path not found or not a directory: " << path << std::endl;
+        return false;
+    }
+    return true;
+}
+
 void PluginManager::load_all_plugins(const std::string &dir) {
     const std::filesystem::path path(dir);
+    if(!check_directory(path)) return;
+
     for (auto &entry: std::filesystem::directory_iterator(path)) {
 
         if(!check_entry(entry)) continue;
         LibraryHandle handle = load_library(entry.path().string());
+        if(handle == nullptr){
+            std::cerr << "Cannot load plugin "<< entry.path().string() << std::endl;
+            continue;
+        }
 
         using CreatePluginFunc = Plugin* (*)();
         auto create_plugin = reinterpret_cast<CreatePluginFunc>(
                 get_symbol(handle, "create_plugin")
         );
-//        if(create_plugin == nullptr) {
-//            std::cerr << "Cannot load symbol create_plugin from "<< entry.path()  << std::endl;
-//            continue;
-//        }
+        if(create_plugin == nullptr) {
+            std::cerr << "Cannot load symbol create_plugin from "<< entry.path()  << std::endl;
+            continue;
+        }
 
         using DestroyPluginFunc = void (*)(Plugin*);
         auto destroy_plugin = reinterpret_cast<DestroyPluginFunc>(
                 get_symbol(handle, "destroy_plugin")
         );
-//        if(destroy_plugin == nullptr) {
-//            std::cerr << "Cannot load symbol destroy_plugin from "<< entry.path()  << std::endl;
-//            continue;
-//        }
+        if(destroy_plugin == nullptr) {
+            std::cerr << "Cannot load symbol destroy_plugin from "<< entry.path()  << std::endl;
+            continue;
+        }
 
         Plugin* raw_plugin = create_plugin();
         if(raw_plugin){

@@ -8,8 +8,9 @@
 #include "TokenType.h"
 
 class Token {
-    std::string text;
+
 public:
+    std::string text;
     double convert_to_double() const;
     TokenType type;
     Token(TokenType type, std::string text);
