@@ -1,11 +1,12 @@
 file(MAKE_DIRECTORY "${PLUGINS_OUTPUT_DIR}")
 
 add_library(funsin SHARED funsin.cpp)
-add_library(funpow SHARED funpow.cpp)
 add_library(funcos SHARED funcos.cpp)
+add_library(funpow SHARED funpow.cpp)
+add_library(funln SHARED funln.cpp)
 
 if(WIN32)
-    set_target_properties(funsin funcos funpow PROPERTIES
+    set_target_properties(funsin funcos funpow funln PROPERTIES
             WINDOWS_EXPORT_ALL_SYMBOLS ON
             SUFFIX ".dll"
             RUNTIME_OUTPUT_DIRECTORY "${PLUGINS_OUTPUT_DIR}"
@@ -16,7 +17,7 @@ if(WIN32)
 
     foreach(CONFIG ${CMAKE_CONFIGURATION_TYPES})
         string(TOUPPER ${CONFIG} CONFIG)
-        set_target_properties(funsin funcos funpow PROPERTIES
+        set_target_properties(funsin funcos funpow funln PROPERTIES
                 RUNTIME_OUTPUT_DIRECTORY_${CONFIG} "${PLUGINS_OUTPUT_DIR}"
                 # LIBRARY_OUTPUT_DIRECTORY_${CONFIG} "${PLUGINS_OUTPUT_DIR}"
                 # ARCHIVE_OUTPUT_DIRECTORY_${CONFIG} "${PLUGINS_OUTPUT_DIR}"
@@ -34,3 +35,4 @@ endif()
 target_include_directories(funsin PRIVATE ${CMAKE_SOURCE_DIR})
 target_include_directories(funcos PRIVATE ${CMAKE_SOURCE_DIR})
 target_include_directories(funpow PRIVATE ${CMAKE_SOURCE_DIR})
+target_include_directories(funln PRIVATE ${CMAKE_SOURCE_DIR})

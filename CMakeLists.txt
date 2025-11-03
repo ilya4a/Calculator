@@ -52,4 +52,4 @@ if(UNIX)
 endif()
 
 add_subdirectory(plugins_src)
-add_dependencies(Calculator funsin funcos funpow)
+add_dependencies(Calculator funsin funcos funpow funln)

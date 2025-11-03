@@ -33,8 +33,6 @@ bool Parser::math_token_with_current(TokenType type) {
 }
 
 std::vector<std::unique_ptr<Expression>> Parser::parse() {
-    printf("\n-----");
-    std::cout<<tokens[0]<<std::endl;
     std::vector<std::unique_ptr<Expression>> result;
     while(!math_token_with_current(TokenType::END_OF_FILE)){
         result.push_back(std::move(expression()));
@@ -97,7 +95,7 @@ std::unique_ptr<Expression> Parser::parse_function() {
         int size = 0;
         while(!math_token_with_current(TokenType::RPAREN)){
 
-            if(!last_comma) throw std::runtime_error("Invalid comma expression");
+            if(!last_comma) throw std::runtime_error("Invalid function expression");
 
             function_args.push_back(std::move(expression()));
             size++;

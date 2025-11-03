@@ -5,16 +5,22 @@
 #include "src/PluginManager.h"
 
 void start(){
-    Lexer a(" pow(2 + 3*cos(0), 3) - 25*sin(3.14/2 + 1 *0) ");
+//    Lexer a(" pow(2 + 3*cos(0), 3) - 25*sin(3.14/2 + 1 *0) ");
+    Lexer a(" ln( 2) * pow(2, 1.5 *2) + 0.12");
     std::vector<Token> v = a.tokenize();
     for(auto &i: v){
         std::cout << i << std::endl;
     }
 
     Parser p(v);
-    auto exprs = p.parse();
-    for (std::unique_ptr<Expression> &i: exprs) {
-        printf("\n%s = %f", i->get_string().c_str(), i->eval());
+
+    try{
+        auto exprs = p.parse();
+        for (std::unique_ptr<Expression> &i: exprs) {
+            printf("\n%s = %f", i->get_string().c_str(), i->eval());
+        }
+    }catch(const std::runtime_error& e){
+        std::cerr<<e.what()<<std::endl;
     }
 }
 
