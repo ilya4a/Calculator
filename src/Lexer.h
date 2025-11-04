@@ -7,7 +7,7 @@
 #include <vector>
 #include <utility>
 #include <array>
-#include "TokenType.h"
+#include "TokenTypeEnum.h"
 #include "Token.h"
 
 class Lexer {
@@ -15,9 +15,9 @@ class Lexer {
             '+', '-', '*', '/', '(', ')', '^'
     };
 
-    constexpr static std::array<TokenType, 7> OPERATOR_TOKENS = {
-            TokenType::PLUS, TokenType::MINUS, TokenType::STAR,
-            TokenType::SLASH, TokenType::LPAREN, TokenType::RPAREN, TokenType::CARET
+    constexpr static std::array<TokenTypeEnum, 7> OPERATOR_TOKENS = {
+            TokenTypeEnum::PLUS, TokenTypeEnum::MINUS, TokenTypeEnum::STAR,
+            TokenTypeEnum::SLASH, TokenTypeEnum::LPAREN, TokenTypeEnum::RPAREN, TokenTypeEnum::CARET
     };
 
     static_assert(OPERATOR_CHARS.size() == OPERATOR_TOKENS.size(),
@@ -28,8 +28,8 @@ class Lexer {
     std::vector<Token> tokens;
     int current_position{};
 
-    void add_token(TokenType type, std::string text);
-    void add_token(TokenType type);
+    void add_token(TokenTypeEnum type, std::string text);
+    void add_token(TokenTypeEnum type);
     char peek(int relative_position);
     char next();
 

@@ -2,11 +2,11 @@
 
 Lexer::Lexer(const std::string& input)  : input(input), input_length(input.size()){}
 
-void Lexer::add_token(TokenType type, std::string text){
+void Lexer::add_token(TokenTypeEnum type, std::string text){
     tokens.emplace_back(type, std::move(text));
 }
 
-void Lexer::add_token(TokenType type){
+void Lexer::add_token(TokenTypeEnum type){
     tokens.emplace_back(type, "");
 }
 
@@ -34,7 +34,7 @@ void Lexer::tokenize_function() {
         name += c;
         c = next();
     }
-    add_token(TokenType::FUNCTION, name);
+    add_token(TokenTypeEnum::FUNCTION, name);
 }
 
 std::vector<Token> Lexer::tokenize() {
@@ -44,7 +44,7 @@ std::vector<Token> Lexer::tokenize() {
         else if(is_operator(current_char)){
             tokenize_operator();
         }else if(current_char == ','){
-            add_token(TokenType::COMMA);
+            add_token(TokenTypeEnum::COMMA);
             next();
         }
         else if(std::isalpha(current_char)){
@@ -54,7 +54,7 @@ std::vector<Token> Lexer::tokenize() {
             next();
         }
     }
-    add_token(TokenType::END_OF_FILE);
+    add_token(TokenTypeEnum::END_OF_FILE);
     return tokens;
 }
 
@@ -82,7 +82,7 @@ void Lexer::tokenize_number() {
     if(!check_number(str)){
         throw std::runtime_error("invalid format of number");
     }
-    add_token(TokenType::NUMBER, std::move(str));
+    add_token(TokenTypeEnum::NUMBER, std::move(str));
 }
 
 bool Lexer::is_operator(char cur) {

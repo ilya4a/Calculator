@@ -1,7 +1,7 @@
-#ifndef CALCULATOR_TOKENTYPE_H
-#define CALCULATOR_TOKENTYPE_H
+#ifndef CALCULATOR_TOKENTYPEENUM_H
+#define CALCULATOR_TOKENTYPEENUM_H
 
-enum class TokenType{
+enum class TokenTypeEnum{
     NUMBER,
 
     PLUS,
@@ -18,4 +18,4 @@ enum class TokenType{
     END_OF_FILE
 };
 
-#endif //CALCULATOR_TOKENTYPE_H
+#endif //CALCULATOR_TOKENTYPEENUM_H

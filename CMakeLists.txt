@@ -25,7 +25,7 @@ add_executable(Calculator
         main.cpp
         src/Lexer.cpp
         src/Lexer.h
-        src/TokenType.h
+        src/TokenTypeEnum.h
         src/Token.cpp
         src/Token.h
         src/Parser.cpp
@@ -37,8 +37,6 @@ add_executable(Calculator
         src/expr/UnaryExpression.h
         src/expr/BinaryExpression.cpp
         src/expr/BinaryExpression.h
-        src/simple_calculator_tests.cpp
-        src/simple_calculator_tests.h
         src/PluginManager.cpp
         src/PluginManager.h
         plugin_interface.h

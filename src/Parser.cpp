@@ -11,7 +11,7 @@
 
 
 Parser::Parser(std::vector<Token> toks, PluginManager &pluginManager)
-        : END_OF_FILE(Token(TokenType::END_OF_FILE, "")),
+        : END_OF_FILE(Token(TokenTypeEnum::END_OF_FILE, "")),
           tokens(std::move(toks)),
           size(static_cast<int>(tokens.size()))
 {
@@ -25,7 +25,7 @@ Token Parser::peek(int relative_position) {
     return tokens[pos];
 }
 
-bool Parser::math_token_with_current(TokenType type) {
+bool Parser::math_token_with_current(TokenTypeEnum type) {
     Token cur = peek(0);
     if(cur.type != type) return false;
     current_position++;
@@ -34,7 +34,7 @@ bool Parser::math_token_with_current(TokenType type) {
 
 std::vector<std::unique_ptr<Expression>> Parser::parse() {
     std::vector<std::unique_ptr<Expression>> result;
-    while(!math_token_with_current(TokenType::END_OF_FILE)){
+    while(!math_token_with_current(TokenTypeEnum::END_OF_FILE)){
         result.push_back(std::move(expression()));
     }
     return result;
@@ -48,10 +48,10 @@ std::unique_ptr<Expression> Parser::additive() {
     std::unique_ptr<Expression> expr = multiplicative();
 
     while(true){
-        if(math_token_with_current(TokenType::PLUS)) {
+        if(math_token_with_current(TokenTypeEnum::PLUS)) {
             expr = std::make_unique<BinaryExpression>('+', std::move(expr), std::move(multiplicative()));
             continue;
-        }if(math_token_with_current(TokenType::MINUS)) {
+        }if(math_token_with_current(TokenTypeEnum::MINUS)) {
             expr = std::make_unique<BinaryExpression>('-', std::move(expr), std::move(multiplicative()));
             continue;
         }
@@ -64,10 +64,10 @@ std::unique_ptr<Expression> Parser::multiplicative() {
     std::unique_ptr<Expression> expr = unary();
 
     while(true){
-        if(math_token_with_current(TokenType::STAR)) {
+        if(math_token_with_current(TokenTypeEnum::STAR)) {
             expr = std::make_unique<BinaryExpression>('*', std::move(expr), std::move(unary()));
             continue;
-        }if(math_token_with_current(TokenType::SLASH)) {
+        }if(math_token_with_current(TokenTypeEnum::SLASH)) {
             expr = std::make_unique<BinaryExpression>('/', std::move(expr), std::move(unary()));
             continue;
         }
@@ -79,9 +79,9 @@ std::unique_ptr<Expression> Parser::multiplicative() {
 
 
 std::unique_ptr<Expression> Parser::unary() {
-    if(math_token_with_current(TokenType::PLUS)){
+    if(math_token_with_current(TokenTypeEnum::PLUS)){
         return std::make_unique<UnaryExpression>('+', unary());
-    }else if(math_token_with_current(TokenType::MINUS)){
+    }else if(math_token_with_current(TokenTypeEnum::MINUS)){
         return std::make_unique<UnaryExpression>('-', unary());
     }
     return power();
@@ -90,7 +90,7 @@ std::unique_ptr<Expression> Parser::unary() {
 std::unique_ptr<Expression> Parser::power() {
 
     std::unique_ptr<Expression> left = primary();
-    if (math_token_with_current(TokenType::CARET)) {
+    if (math_token_with_current(TokenTypeEnum::CARET)) {
         std::unique_ptr<Expression> right = unary();
         return std::make_unique<BinaryExpression>('^', std::move(left), std::move(right));
     }
@@ -102,17 +102,17 @@ std::unique_ptr<Expression> Parser::parse_function() {
 
     std::string function_name = peek(-1).text;
 
-    if(math_token_with_current(TokenType::LPAREN)){
+    if(math_token_with_current(TokenTypeEnum::LPAREN)){
         std::vector<std::unique_ptr<Expression>> function_args;
         bool last_comma = true;
         int size = 0;
-        while(!math_token_with_current(TokenType::RPAREN)){
+        while(!math_token_with_current(TokenTypeEnum::RPAREN)){
 
             if(!last_comma) throw std::runtime_error("Invalid function expression");
 
             function_args.push_back(std::move(expression()));
             size++;
-            last_comma = math_token_with_current(TokenType::COMMA);
+            last_comma = math_token_with_current(TokenTypeEnum::COMMA);
         }
         std::shared_ptr<Plugin> plugin = pm.get_plugin(function_name);
         if(plugin != nullptr){
@@ -131,15 +131,15 @@ std::unique_ptr<Expression> Parser::parse_function() {
 
 std::unique_ptr<Expression> Parser::primary() {
     const Token cur = peek(0);
-    if (math_token_with_current(TokenType::NUMBER)) {
+    if (math_token_with_current(TokenTypeEnum::NUMBER)) {
         return std::make_unique<NumberExpression>(cur.convert_to_double());
-    }else if(math_token_with_current(TokenType::FUNCTION)){
+    }else if(math_token_with_current(TokenTypeEnum::FUNCTION)){
 
         return parse_function();
 
-    }else if(math_token_with_current(TokenType::LPAREN)){
+    }else if(math_token_with_current(TokenTypeEnum::LPAREN)){
         std::unique_ptr<Expression> res = expression();
-        if(math_token_with_current(TokenType::RPAREN)){
+        if(math_token_with_current(TokenTypeEnum::RPAREN)){
             return res;
         }else{
             throw std::runtime_error("Invalid bracket expression");

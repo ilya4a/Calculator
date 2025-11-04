@@ -4,6 +4,7 @@
 
 #include <valarray>
 #include "BinaryExpression.h"
+#include "stdexcept"
 
 std::string BinaryExpression::get_string() const {
     return expr1->get_string() + " " + operation + " " + expr2->get_string();

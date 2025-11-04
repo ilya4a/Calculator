@@ -20,7 +20,7 @@ class Parser {
 
     Token peek(int relative_position);
 
-    bool math_token_with_current(TokenType type);
+    bool math_token_with_current(TokenTypeEnum type);
 
     std::unique_ptr<Expression> expression();
     std::unique_ptr<Expression> additive();
