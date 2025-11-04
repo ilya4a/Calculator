@@ -11,10 +11,11 @@
 #endif
 
 struct Plugin {
-    const char*  name;
+    const char *name;
     int num_of_args;
+
     int (*eval)(const double *args, int nargs, double *out);
 };
 
-extern "C" Plugin* create_plugin();
-extern "C" void destroy_plugin(Plugin* plugin);
+extern "C" Plugin *create_plugin();
+extern "C" void destroy_plugin(Plugin *plugin);

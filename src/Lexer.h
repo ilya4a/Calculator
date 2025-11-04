@@ -29,23 +29,30 @@ class Lexer {
     int current_position{};
 
     void add_token(TokenTypeEnum type, std::string text);
+
     void add_token(TokenTypeEnum type);
+
     char peek(int relative_position);
+
     char next();
 
     void tokenize_number();
+
     bool is_operator(char cur);
+
     void tokenize_operator();
 
     bool check_number(std::string &num);
+
     bool is_letter();
+
     void tokenize_function();
 
 
 public:
-    explicit Lexer(const std::string& input);
-    std::vector<Token> tokenize();
+    explicit Lexer(const std::string &input);
 
+    std::vector<Token> tokenize();
 
 
 };

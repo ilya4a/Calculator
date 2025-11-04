@@ -14,6 +14,7 @@
 #include "Parser.h"
 
 static bool approxEqual(double a, double b);
+
 void test();
 
 #endif //CALCULATOR_TESTS_H

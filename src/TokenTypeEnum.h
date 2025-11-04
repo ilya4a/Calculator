@@ -1,7 +1,7 @@
 #ifndef CALCULATOR_TOKENTYPEENUM_H
 #define CALCULATOR_TOKENTYPEENUM_H
 
-enum class TokenTypeEnum{
+enum class TokenTypeEnum {
     NUMBER,
 
     PLUS,

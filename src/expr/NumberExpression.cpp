@@ -4,6 +4,7 @@
 
 #include <ios>
 #include <iomanip>
+#include <sstream>
 #include <cmath>
 #include "NumberExpression.h"
 
@@ -18,14 +19,14 @@ std::string NumberExpression::to_string(double value, int n) {
     return oss.str();
 }
 
-std::string NumberExpression::get_string() const{
-    if(fabs(value) < 1){
+std::string NumberExpression::get_string() const {
+    if (fabs(value) < 1) {
         return to_string(value, 4);
-    }else{
+    } else {
         return to_string(value, 2);
     }
 }
 
-NumberExpression::NumberExpression(double value) : value(value){}
+NumberExpression::NumberExpression(double value) : value(value) {}
 
 NumberExpression::~NumberExpression() = default;

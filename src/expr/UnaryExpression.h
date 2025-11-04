@@ -14,9 +14,12 @@ class UnaryExpression : public Expression {
     std::unique_ptr<Expression> expr1;
 
 public:
-    UnaryExpression(char operation,  std::unique_ptr<Expression> e);
+    UnaryExpression(char operation, std::unique_ptr<Expression> e);
+
     std::string get_string() const override;
+
     double eval() const override;
+
     ~UnaryExpression() override;
 };
 

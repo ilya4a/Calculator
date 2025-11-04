@@ -12,7 +12,9 @@ class Expression {
 
 public:
     virtual std::string get_string() const = 0;
+
     virtual double eval() const = 0;
+
     virtual ~Expression() = default;
 };
 

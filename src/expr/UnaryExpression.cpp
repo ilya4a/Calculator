@@ -5,9 +5,9 @@
 #include "UnaryExpression.h"
 
 double UnaryExpression::eval() const {
-    if(operation == '-'){
+    if (operation == '-') {
         return -expr1->eval();
-    }else{
+    } else {
         return expr1->eval();
     }
     return 0;
@@ -20,4 +20,4 @@ std::string UnaryExpression::get_string() const {
 UnaryExpression::~UnaryExpression() = default;
 
 UnaryExpression::UnaryExpression(char operation, std::unique_ptr<Expression> e) :
-operation(operation), expr1(std::move(e)) {}
+        operation(operation), expr1(std::move(e)) {}

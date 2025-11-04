@@ -23,17 +23,23 @@ class Parser {
     bool math_token_with_current(TokenTypeEnum type);
 
     std::unique_ptr<Expression> expression();
+
     std::unique_ptr<Expression> additive();
+
     std::unique_ptr<Expression> multiplicative();
+
     std::unique_ptr<Expression> unary();
+
     std::unique_ptr<Expression> primary();
+
     std::unique_ptr<Expression> parse_function();
 
     PluginManager pm;
 
-    public:
-        explicit Parser(std::vector<Token> toks, PluginManager &pluginManager);
-        std::vector<std::unique_ptr<Expression>> parse();
+public:
+    explicit Parser(std::vector<Token> toks, PluginManager &pluginManager);
+
+    std::vector<std::unique_ptr<Expression>> parse();
 
     std::unique_ptr<Expression> power();
 };

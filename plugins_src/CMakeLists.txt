@@ -6,7 +6,7 @@ add_library(funpow SHARED funpow.cpp)
 add_library(funln SHARED funln.cpp)
 add_library(fundeg SHARED fundeg.cpp)
 
-if(WIN32)
+if (WIN32)
     set_target_properties(funsin funcos funpow funln fundeg PROPERTIES
             WINDOWS_EXPORT_ALL_SYMBOLS ON
             SUFFIX ".dll"
@@ -16,7 +16,7 @@ if(WIN32)
             # PDB_OUTPUT_DIRECTORY "${PLUGINS_OUTPUT_DIR}"
     )
 
-    foreach(CONFIG ${CMAKE_CONFIGURATION_TYPES})
+    foreach (CONFIG ${CMAKE_CONFIGURATION_TYPES})
         string(TOUPPER ${CONFIG} CONFIG)
         set_target_properties(funsin funcos funpow funln fundeg PROPERTIES
                 RUNTIME_OUTPUT_DIRECTORY_${CONFIG} "${PLUGINS_OUTPUT_DIR}"
@@ -24,14 +24,14 @@ if(WIN32)
                 # ARCHIVE_OUTPUT_DIRECTORY_${CONFIG} "${PLUGINS_OUTPUT_DIR}"
                 # PDB_OUTPUT_DIRECTORY_${CONFIG} "${PLUGINS_OUTPUT_DIR}"
         )
-    endforeach()
-else()
+    endforeach ()
+else ()
     set_target_properties(funsin funcos funpow funln fundeg PROPERTIES
             PREFIX ""
             SUFFIX ".so"
             LIBRARY_OUTPUT_DIRECTORY "${PLUGINS_OUTPUT_DIR}"
     )
-endif()
+endif ()
 
 target_include_directories(funsin PRIVATE ${CMAKE_SOURCE_DIR})
 target_include_directories(funcos PRIVATE ${CMAKE_SOURCE_DIR})

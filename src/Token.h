@@ -11,10 +11,14 @@ class Token {
 
 public:
     std::string text;
+
     double convert_to_double() const;
+
     TokenTypeEnum type;
+
     Token(TokenTypeEnum type, std::string text);
-    friend std::ostream& operator<<(std::ostream& os, const Token& token);
+
+    friend std::ostream &operator<<(std::ostream &os, const Token &token);
 };
 
 

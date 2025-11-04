@@ -10,11 +10,16 @@
 
 class NumberExpression : public Expression {
     double value;
+
     static std::string to_string(double value, int n);
+
 public:
     NumberExpression(double value);
+
     std::string get_string() const override;
+
     double eval() const override;
+
     ~NumberExpression() override;
 };
 

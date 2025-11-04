@@ -3,6 +3,7 @@
 A mathematical expression calculator with plugin support.
 
 ## Examples
+
 ```
 to exit, enter the q
 to show the list of available functions, enter the f
