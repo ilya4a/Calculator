@@ -3,7 +3,7 @@
 A mathematical expression calculator with plugin support.
 
 ## Examples
-
+```
 to exit, enter the q
 to show the list of available functions, enter the f
 
@@ -28,3 +28,4 @@ enter the expression: -2^-2
 
 enter the expression: 3*3*3 + 3^1
 3.00 * 3.00 * 3.00 + 3.00 ^ 1.00 = 30
+```
