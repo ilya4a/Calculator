@@ -11,8 +11,8 @@ else ()
     set(PLUGIN_EXT "so")
 endif ()
 
-set(PLUGINS_OUTPUT_DIR "${CMAKE_SOURCE_DIR}/plugins")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}")
+set(PLUGINS_OUTPUT_DIR "${CMAKE_BINARY_DIR}/plugins")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PLUGINS_OUTPUT_DIR}")
 
 foreach (OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
@@ -22,14 +22,14 @@ foreach (OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES})
 endforeach ()
 
 add_executable(Calculator
-        main.cpp
-        src/Lexer.cpp
-        src/Lexer.h
-        src/TokenTypeEnum.h
-        src/Token.cpp
-        src/Token.h
-        src/Parser.cpp
-        src/Parser.h
+        src/main.cpp
+        src/lexer/Lexer.cpp
+        src/lexer/Lexer.h
+        src/lexer/TokenTypeEnum.h
+        src/lexer/Token.cpp
+        src/lexer/Token.h
+        src/parser/Parser.cpp
+        src/parser/Parser.h
         src/expr/Expression.h
         src/expr/NumberExpression.cpp
         src/expr/NumberExpression.h
@@ -37,13 +37,13 @@ add_executable(Calculator
         src/expr/UnaryExpression.h
         src/expr/BinaryExpression.cpp
         src/expr/BinaryExpression.h
-        src/PluginManager.cpp
-        src/PluginManager.h
+        src/plugin/PluginManager.cpp
+        src/plugin/PluginManager.h
         plugin_interface.h
         src/expr/FunctionExpression.cpp
         src/expr/FunctionExpression.h
-        src/tests.cpp
-        src/tests.h
+        src/tests/tests.cpp
+        src/tests/tests.h
 )
 
 if (UNIX)

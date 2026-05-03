@@ -2,13 +2,12 @@
 // Created by ilya on 10/30/25.
 //
 
-#include <iostream>
 #include "Parser.h"
-#include "expr/NumberExpression.h"
-#include "expr/BinaryExpression.h"
-#include "expr/UnaryExpression.h"
-#include "expr/FunctionExpression.h"
-
+#include "../expr/BinaryExpression.h"
+#include "../expr/FunctionExpression.h"
+#include "../expr/NumberExpression.h"
+#include "../expr/UnaryExpression.h"
+#include <iostream>
 
 Parser::Parser(std::vector<Token> toks, PluginManager &pluginManager)
         : END_OF_FILE(Token(TokenTypeEnum::END_OF_FILE, "")),

@@ -1,8 +1,5 @@
 cmake-build-debug/
 .idea/
 
-plugins/*
-!plugins/.gitkeep
-
 src/simple_calc_tests.cpp
 src/simple_calc_tests.h

@@ -1,9 +1,9 @@
 //
 // Created by ilya on 11/1/25.
+#include "PluginManager.h"
+#include "../../plugin_interface.h"
 #include <filesystem>
 #include <iostream>
-#include "PluginManager.h"
-#include "../plugin_interface.h"
 
 bool PluginManager::check_entry(std::filesystem::directory_entry entry) {
     if (!entry.is_regular_file()) return false;
@@ -36,6 +36,7 @@ void *PluginManager::get_symbol(LibraryHandle handle, const std::string &symbol_
 }
 
 bool check_directory(std::filesystem::path path) {
+
     if (!std::filesystem::exists(path) || !std::filesystem::is_directory(path)) {
         std::cerr << "Plugins path not found or not a directory: " << path << std::endl;
         return false;

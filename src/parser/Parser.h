@@ -5,12 +5,11 @@
 #ifndef CALCULATOR_PARSER_H
 #define CALCULATOR_PARSER_H
 
-
-#include <vector>
+#include "../expr/Expression.h"
+#include "../lexer/Token.h"
+#include "../plugin/PluginManager.h"
 #include <memory>
-#include "Token.h"
-#include "expr/Expression.h"
-#include "PluginManager.h"
+#include <vector>
 
 class Parser {
     const Token END_OF_FILE;

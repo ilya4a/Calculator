@@ -5,13 +5,13 @@
 #ifndef CALCULATOR_TESTS_H
 #define CALCULATOR_TESTS_H
 
+#include "../lexer/Lexer.h"
+#include "../parser/Parser.h"
 #include <cassert>
 #include <cmath>
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Lexer.h"
-#include "Parser.h"
 
 static bool approxEqual(double a, double b);
 

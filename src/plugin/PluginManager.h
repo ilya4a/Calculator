@@ -7,11 +7,11 @@
 #include <string>
 #include <unordered_map>
 
+#include "../../plugin_interface.h"
+#include <filesystem>
+#include <memory>
 #include <string>
 #include <vector>
-#include <memory>
-#include <filesystem>
-#include "../plugin_interface.h"
 
 #ifdef _WIN32
 #include <Windows.h>

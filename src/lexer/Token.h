@@ -2,10 +2,10 @@
 #ifndef CALCULATOR_TOKEN_H
 #define CALCULATOR_TOKEN_H
 
+#include "TokenTypeEnum.h"
 #include <ostream>
 #include <string>
 #include <utility>
-#include "TokenTypeEnum.h"
 
 class Token {
 

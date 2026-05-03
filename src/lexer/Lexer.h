@@ -1,14 +1,11 @@
 #ifndef CALCULATOR_LEXER_H
 #define CALCULATOR_LEXER_H
 
-
-#include <string>
-#include <utility>
-#include <vector>
-#include <utility>
-#include <array>
-#include "TokenTypeEnum.h"
 #include "Token.h"
+#include "TokenTypeEnum.h"
+#include <array>
+#include <string>
+#include <vector>
 
 class Lexer {
     constexpr static std::array<char, 7> OPERATOR_CHARS = {

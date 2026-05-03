@@ -1,8 +1,8 @@
+#include "lexer/Lexer.h"
+#include "parser/Parser.h"
+#include "plugin/PluginManager.h"
+#include "tests/tests.h"
 #include <iostream>
-#include "src/Lexer.h"
-#include "src/Parser.h"
-#include "src/tests.h"
-#include "src/PluginManager.h"
 
 void start_program() {
 
