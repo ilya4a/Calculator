@@ -1,13 +1,9 @@
-//
-// Created by ilya on 10/30/25.
-//
-
 #ifndef CALCULATOR_PARSER_H
 #define CALCULATOR_PARSER_H
 
-#include "../expr/Expression.h"
-#include "../lexer/Token.h"
-#include "../plugin/PluginManager.h"
+#include "expr/Expression.h"
+#include "lexer/Token.h"
+#include "plugin/PluginManager.h"
 #include <memory>
 #include <vector>
 
@@ -35,7 +31,7 @@ class Parser {
 
     PluginManager pm;
 
-public:
+  public:
     explicit Parser(std::vector<Token> toks, PluginManager &pluginManager);
 
     std::vector<std::unique_ptr<Expression>> parse();
@@ -43,5 +39,4 @@ public:
     std::unique_ptr<Expression> power();
 };
 
-
-#endif //CALCULATOR_PARSER_H
+#endif // CALCULATOR_PARSER_H

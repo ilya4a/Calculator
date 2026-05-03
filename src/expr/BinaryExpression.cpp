@@ -1,10 +1,6 @@
-//
-// Created by ilya on 10/30/25.
-//
-
-#include <valarray>
 #include "BinaryExpression.h"
 #include "stdexcept"
+#include <valarray>
 
 std::string BinaryExpression::get_string() const {
     return expr1->get_string() + " " + operation + " " + expr2->get_string();
@@ -12,10 +8,8 @@ std::string BinaryExpression::get_string() const {
 
 double BinaryExpression::eval() const {
     switch (operation) {
-        case '-':
-            return expr1->eval() - expr2->eval();
-        case '*':
-            return expr1->eval() * expr2->eval();
+        case '-': return expr1->eval() - expr2->eval();
+        case '*': return expr1->eval() * expr2->eval();
         case '/': {
             double e2 = expr2->eval();
             if (fabs(e2) < 1e-14) {
@@ -34,13 +28,14 @@ double BinaryExpression::eval() const {
 
             return std::pow(expr1->eval(), expr2->eval());
         }
-        default:
-            return expr1->eval() + expr2->eval();
+        default: return expr1->eval() + expr2->eval();
     }
     return 0;
 }
 
 BinaryExpression::BinaryExpression(char operation, std::unique_ptr<Expression> e1, std::unique_ptr<Expression> e2)
-        : operation(operation), expr1(std::move(e1)), expr2(std::move(e2)) {}
+    : operation(operation),
+      expr1(std::move(e1)),
+      expr2(std::move(e2)) { }
 
 BinaryExpression::~BinaryExpression() = default;

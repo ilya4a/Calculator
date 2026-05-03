@@ -1,15 +1,10 @@
-//
-// Created by ilya on 10/30/25.
-//
-
-#include <ios>
-#include <iomanip>
-#include <sstream>
-#include <cmath>
 #include "NumberExpression.h"
+#include <cmath>
+#include <iomanip>
+#include <ios>
+#include <sstream>
 
 double NumberExpression::eval() const {
-
     return value;
 }
 
@@ -27,6 +22,6 @@ std::string NumberExpression::get_string() const {
     }
 }
 
-NumberExpression::NumberExpression(double value) : value(value) {}
+NumberExpression::NumberExpression(double value) : value(value) { }
 
 NumberExpression::~NumberExpression() = default;

@@ -1,13 +1,16 @@
-//
-// Created by ilya on 11/1/25.
 #include "PluginManager.h"
-#include "../../plugin_interface.h"
+
+#include "plugin_interface.h"
 #include <filesystem>
 #include <iostream>
 
 bool PluginManager::check_entry(std::filesystem::directory_entry entry) {
-    if (!entry.is_regular_file()) return false;
-    if (!entry.is_regular_file()) return false;
+    if (!entry.is_regular_file()) {
+        return false;
+    }
+    if (!entry.is_regular_file()) {
+        return false;
+    }
     return entry.path().extension() == LIB_EXT;
 }
 
@@ -21,22 +24,39 @@ PluginManager::LibraryHandle PluginManager::load_library(const std::string &path
 
 void PluginManager::close_library(LibraryHandle handle) {
 #ifdef _WIN32
-    if (handle) FreeLibrary(handle);
+    if (handle) {
+        FreeLibrary(handle);
+    }
 #else
-    if (handle) dlclose(handle);
+    if (handle) {
+        dlclose(handle);
+    }
 #endif
 }
 
 void *PluginManager::get_symbol(LibraryHandle handle, const std::string &symbol_name) {
 #ifdef _WIN32
-    return (void*)GetProcAddress(handle, symbol_name.c_str());
+    return (void *) GetProcAddress(handle, symbol_name.c_str());
 #else
     return dlsym(handle, symbol_name.c_str());
 #endif
 }
 
-bool check_directory(std::filesystem::path path) {
+#ifdef _WIN32
+#include <windows.h>
+std::filesystem::path get_executable_dir() {
+    wchar_t buf[MAX_PATH];
+    GetModuleFileNameW(NULL, buf, MAX_PATH);
+    return std::filesystem::path(buf).parent_path();
+}
+#else
+#include <unistd.h>
+std::filesystem::path get_executable_dir() {
+    return std::filesystem::canonical("/proc/self/exe").parent_path();
+}
+#endif
 
+bool check_directory(std::filesystem::path path) {
     if (!std::filesystem::exists(path) || !std::filesystem::is_directory(path)) {
         std::cerr << "Plugins path not found or not a directory: " << path << std::endl;
         return false;
@@ -45,31 +65,30 @@ bool check_directory(std::filesystem::path path) {
 }
 
 void PluginManager::load_all_plugins(const std::string &dir) {
-    const std::filesystem::path path(dir);
-    if (!check_directory(path)) return;
+    const std::filesystem::path path(get_executable_dir() / dir);
+    if (!check_directory(path)) {
+        return;
+    }
 
-    for (auto &entry: std::filesystem::directory_iterator(path)) {
-
-        if (!check_entry(entry)) continue;
+    for (auto &entry : std::filesystem::directory_iterator(path)) {
+        if (!check_entry(entry)) {
+            continue;
+        }
         LibraryHandle handle = load_library(entry.path().string());
         if (handle == nullptr) {
             std::cerr << "Cannot load plugin " << entry.path().string() << std::endl;
             continue;
         }
 
-        using CreatePluginFunc = Plugin *(*)();
-        auto create_plugin = reinterpret_cast<CreatePluginFunc>(
-                get_symbol(handle, "create_plugin")
-        );
+        using CreatePluginFunc = Plugin *(*) ();
+        auto create_plugin = reinterpret_cast<CreatePluginFunc>(get_symbol(handle, "create_plugin"));
         if (create_plugin == nullptr) {
             std::cerr << "Cannot load symbol create_plugin from " << entry.path() << std::endl;
             continue;
         }
 
         using DestroyPluginFunc = void (*)(Plugin *);
-        auto destroy_plugin = reinterpret_cast<DestroyPluginFunc>(
-                get_symbol(handle, "destroy_plugin")
-        );
+        auto destroy_plugin = reinterpret_cast<DestroyPluginFunc>(get_symbol(handle, "destroy_plugin"));
         if (destroy_plugin == nullptr) {
             std::cerr << "Cannot load symbol destroy_plugin from " << entry.path() << std::endl;
             continue;
@@ -97,17 +116,18 @@ void PluginManager::load_all_plugins(const std::string &dir) {
     }
 }
 
-
 std::shared_ptr<Plugin> PluginManager::get_plugin(const std::string &name) {
-    for (const auto &p: plugins) {
-        if (name == p->name) return p;
+    for (const auto &p : plugins) {
+        if (name == p->name) {
+            return p;
+        }
     }
     return nullptr;
 }
 
 std::vector<std::string> PluginManager::get_list_of_function_names() {
     std::vector<std::string> res;
-    for (auto &i: plugins) {
+    for (auto &i : plugins) {
         res.emplace_back(i->name);
     }
     return res;

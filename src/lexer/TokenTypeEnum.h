@@ -10,12 +10,12 @@ enum class TokenTypeEnum {
     SLASH,
     CARET,
 
-    LPAREN, // (
-    RPAREN, // )
+    LPAREN,
+    RPAREN,
 
     FUNCTION,
     COMMA,
     END_OF_FILE
 };
 
-#endif //CALCULATOR_TOKENTYPEENUM_H
+#endif // CALCULATOR_TOKENTYPEENUM_H

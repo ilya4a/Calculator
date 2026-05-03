@@ -1,10 +1,15 @@
-//
-// Created by ilya on 11/4/25.
-//
 #include "tests.h"
 
+#include "lexer/Lexer.h"
+#include "parser/Parser.h"
+#include <cassert>
+#include <cmath>
+#include <iostream>
+#include <string>
+#include <vector>
+
 static bool approxEqual(double a, double b) {
-    return std::fabs(a - b) <= 1e-5;
+    return std::fabs(a - b) <= TEST_EPS;
 }
 
 void test() {
@@ -17,7 +22,6 @@ void test() {
         auto exprs = parser.parse();
         assert(!exprs.empty());
         double res = exprs.front()->eval();
-//        std::cout<<res<<"  result"<<std::endl;
         return res;
     };
 

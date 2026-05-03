@@ -1,31 +1,30 @@
-//
-// Created by ilya on 10/30/25.
-//
-
 #include "Parser.h"
-#include "../expr/BinaryExpression.h"
-#include "../expr/FunctionExpression.h"
-#include "../expr/NumberExpression.h"
-#include "../expr/UnaryExpression.h"
-#include <iostream>
+#include "expr/BinaryExpression.h"
+#include "expr/FunctionExpression.h"
+#include "expr/NumberExpression.h"
+#include "expr/UnaryExpression.h"
 
 Parser::Parser(std::vector<Token> toks, PluginManager &pluginManager)
-        : END_OF_FILE(Token(TokenTypeEnum::END_OF_FILE, "")),
-          tokens(std::move(toks)),
-          size(static_cast<int>(tokens.size())) {
+    : END_OF_FILE(Token(TokenTypeEnum::END_OF_FILE, "")),
+      tokens(std::move(toks)),
+      size(static_cast<int>(tokens.size())) {
     pm = pluginManager;
     current_position = 0;
 }
 
 Token Parser::peek(int relative_position) {
     int pos = current_position + relative_position;
-    if (pos >= size) return END_OF_FILE;
+    if (pos >= size) {
+        return END_OF_FILE;
+    }
     return tokens[pos];
 }
 
 bool Parser::math_token_with_current(TokenTypeEnum type) {
     Token cur = peek(0);
-    if (cur.type != type) return false;
+    if (cur.type != type) {
+        return false;
+    }
     current_position++;
     return true;
 }
@@ -76,7 +75,6 @@ std::unique_ptr<Expression> Parser::multiplicative() {
     return expr;
 }
 
-
 std::unique_ptr<Expression> Parser::unary() {
     if (math_token_with_current(TokenTypeEnum::PLUS)) {
         return std::make_unique<UnaryExpression>('+', unary());
@@ -87,18 +85,15 @@ std::unique_ptr<Expression> Parser::unary() {
 }
 
 std::unique_ptr<Expression> Parser::power() {
-
     std::unique_ptr<Expression> left = primary();
     if (math_token_with_current(TokenTypeEnum::CARET)) {
         std::unique_ptr<Expression> right = unary();
         return std::make_unique<BinaryExpression>('^', std::move(left), std::move(right));
     }
     return left;
-
 }
 
 std::unique_ptr<Expression> Parser::parse_function() {
-
     std::string function_name = peek(-1).text;
 
     if (math_token_with_current(TokenTypeEnum::LPAREN)) {
@@ -106,8 +101,9 @@ std::unique_ptr<Expression> Parser::parse_function() {
         bool last_comma = true;
         int size = 0;
         while (!math_token_with_current(TokenTypeEnum::RPAREN)) {
-
-            if (!last_comma) throw std::runtime_error("Invalid function expression");
+            if (!last_comma) {
+                throw std::runtime_error("Invalid function expression");
+            }
 
             function_args.push_back(std::move(expression()));
             size++;
@@ -120,19 +116,15 @@ std::unique_ptr<Expression> Parser::parse_function() {
             throw std::runtime_error("invalid name of function");
         }
     } else {
-
         throw std::runtime_error("Invalid bracket expression");
     }
-
 }
-
 
 std::unique_ptr<Expression> Parser::primary() {
     const Token cur = peek(0);
     if (math_token_with_current(TokenTypeEnum::NUMBER)) {
         return std::make_unique<NumberExpression>(cur.convert_to_double());
     } else if (math_token_with_current(TokenTypeEnum::FUNCTION)) {
-
         return parse_function();
 
     } else if (math_token_with_current(TokenTypeEnum::LPAREN)) {
@@ -145,8 +137,4 @@ std::unique_ptr<Expression> Parser::primary() {
     }
     throw std::runtime_error("Unexpected token in primary()");
 }
-
-
-
-
 

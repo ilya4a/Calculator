@@ -1,7 +1,3 @@
-//
-// Created by ilya on 11/2/25.
-//
-
 #pragma once
 
 #ifdef _WIN32

@@ -1,7 +1,3 @@
-//
-// Created by ilya on 10/30/25.
-//
-
 #include "UnaryExpression.h"
 
 double UnaryExpression::eval() const {
@@ -19,5 +15,6 @@ std::string UnaryExpression::get_string() const {
 
 UnaryExpression::~UnaryExpression() = default;
 
-UnaryExpression::UnaryExpression(char operation, std::unique_ptr<Expression> e) :
-        operation(operation), expr1(std::move(e)) {}
+UnaryExpression::UnaryExpression(char operation, std::unique_ptr<Expression> e)
+    : operation(operation),
+      expr1(std::move(e)) { }

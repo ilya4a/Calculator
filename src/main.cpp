@@ -1,11 +1,9 @@
 #include "lexer/Lexer.h"
 #include "parser/Parser.h"
 #include "plugin/PluginManager.h"
-#include "tests/tests.h"
 #include <iostream>
 
 void start_program() {
-
     PluginManager pm;
     pm.load_all_plugins("plugins");
 
@@ -16,10 +14,12 @@ void start_program() {
     while (true) {
         std::cout << std::endl << "enter the expression: ";
         std::getline(std::cin, input);
-        if (input == "q") break;
+        if (input == "q") {
+            break;
+        }
         if (input == "f") {
             std::cout << std::endl << "available functions:" << std::endl;
-            for (auto &i: pm.get_list_of_function_names()) {
+            for (auto &i : pm.get_list_of_function_names()) {
                 std::cout << i << std::endl;
             }
             continue;
@@ -30,7 +30,7 @@ void start_program() {
             Parser p(lexer.tokenize(), pm);
 
             auto exprs = p.parse();
-            for (std::unique_ptr<Expression> &i: exprs) {
+            for (std::unique_ptr<Expression> &i : exprs) {
                 double val = i->eval();
                 std::cout << i->get_string() << " = " << val << std::endl;
             }
@@ -40,8 +40,7 @@ void start_program() {
     }
 }
 
-
 int main() {
     start_program();
-//    test();
+    //    test();
 }

@@ -8,22 +8,22 @@
 #include <vector>
 
 class Lexer {
-    constexpr static std::array<char, 7> OPERATOR_CHARS = {
-            '+', '-', '*', '/', '(', ')', '^'
-    };
+    constexpr static std::array<char, 7> OPERATOR_CHARS = { '+', '-', '*', '/', '(', ')', '^' };
 
-    constexpr static std::array<TokenTypeEnum, 7> OPERATOR_TOKENS = {
-            TokenTypeEnum::PLUS, TokenTypeEnum::MINUS, TokenTypeEnum::STAR,
-            TokenTypeEnum::SLASH, TokenTypeEnum::LPAREN, TokenTypeEnum::RPAREN, TokenTypeEnum::CARET
-    };
+    constexpr static std::array<TokenTypeEnum, 7> OPERATOR_TOKENS = { TokenTypeEnum::PLUS,   TokenTypeEnum::MINUS,
+                                                                      TokenTypeEnum::STAR,   TokenTypeEnum::SLASH,
+                                                                      TokenTypeEnum::LPAREN, TokenTypeEnum::RPAREN,
+                                                                      TokenTypeEnum::CARET };
 
-    static_assert(OPERATOR_CHARS.size() == OPERATOR_TOKENS.size(),
-                  "OPERATOR_CHARS and OPERATOR_TOKENS must have the same size");
+    static_assert(
+        OPERATOR_CHARS.size() == OPERATOR_TOKENS.size(),
+        "OPERATOR_CHARS and OPERATOR_TOKENS must have the same size"
+    );
 
     const std::string input;
     const int input_length;
     std::vector<Token> tokens;
-    int current_position{};
+    int current_position {};
 
     void add_token(TokenTypeEnum type, std::string text);
 
@@ -45,13 +45,10 @@ class Lexer {
 
     void tokenize_function();
 
-
-public:
+  public:
     explicit Lexer(const std::string &input);
 
     std::vector<Token> tokenize();
-
-
 };
 
-#endif //CALCULATOR_LEXER_H
+#endif // CALCULATOR_LEXER_H

@@ -1,16 +1,11 @@
-//
-// Created by ilya on 11/1/25.
-//
 #ifndef CALCULATOR_PLUGINMANAGER_H
 #define CALCULATOR_PLUGINMANAGER_H
 
 #include <string>
-#include <unordered_map>
 
-#include "../../plugin_interface.h"
+#include "plugin_interface.h"
 #include <filesystem>
 #include <memory>
-#include <string>
 #include <vector>
 
 #ifdef _WIN32
@@ -24,13 +19,11 @@
 #endif
 
 class PluginManager {
-
 #ifdef _WIN32
     using LibraryHandle = HMODULE;
 #else
     using LibraryHandle = void *;
 #endif
-
 
     LibraryHandle load_library(const std::string &path);
 
@@ -42,8 +35,7 @@ class PluginManager {
 
     bool check_entry(std::filesystem::directory_entry entry);
 
-public:
-
+  public:
     PluginManager() = default;
 
     void load_all_plugins(const std::string &dir);
@@ -51,7 +43,6 @@ public:
     std::shared_ptr<Plugin> get_plugin(const std::string &name);
 
     std::vector<std::string> get_list_of_function_names();
-
 };
 
-#endif //CALCULATOR_PLUGINMANAGER_H
+#endif // CALCULATOR_PLUGINMANAGER_H

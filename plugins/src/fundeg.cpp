@@ -1,19 +1,19 @@
-//
-// Created by ilya on 11/4/25.
-//
-
+#include "plugin_interface.h"
 #include <cmath>
-#include "../plugin_interface.h"
+#include <numbers>
 
 int eval(const double *args, int nargs, double *out) {
+    if (nargs != 1 || args == nullptr || out == nullptr) {
+        return 1;
+    }
 
-    if (nargs != 1 || args == nullptr || out == nullptr) return 1;
-
-    constexpr double PI = 3.14159265358979323846;
+    constexpr double PI = std::numbers::pi;
 
     *out = args[0] * PI / 180.0;
 
-    if (std::isnan(*out) || !std::isfinite(*out)) return 2;
+    if (std::isnan(*out) || !std::isfinite(*out)) {
+        return 2;
+    }
 
     return 0;
 }

@@ -1,14 +1,12 @@
-//
-// Created by ilya on 11/3/25.
-//
-
 #include "FunctionExpression.h"
 
-#include <utility>
 #include <iostream>
+#include <utility>
 
-FunctionExpression::FunctionExpression(std::shared_ptr<Plugin> plugin,
-                                       std::vector<std::unique_ptr<Expression>> function_args) {
+FunctionExpression::FunctionExpression(
+    std::shared_ptr<Plugin> plugin,
+    std::vector<std::unique_ptr<Expression>> function_args
+) {
     this->plugin = std::move(plugin);
     this->args = std::move(function_args);
 }
@@ -16,7 +14,7 @@ FunctionExpression::FunctionExpression(std::shared_ptr<Plugin> plugin,
 std::string FunctionExpression::get_string() const {
     std::string res = plugin->name;
     res += "(";
-    for (auto &i: args) {
+    for (auto &i : args) {
         res += i->get_string();
         res += ", ";
     }
