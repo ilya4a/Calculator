@@ -49,7 +49,7 @@ double FunctionExpression::eval() const {
 
     } else if (eval_res == 2) {
         delete[] num_args;
-        std::string err = "FunctionExpression invalid agrs in function: ";
+        std::string err = "invalid args in function: ";
         err += plugin->name;
         throw std::runtime_error(err);
     }

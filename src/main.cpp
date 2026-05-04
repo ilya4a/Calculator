@@ -12,7 +12,8 @@ void start_program() {
     std::cout << "to show the list of available functions, enter the f" << std::endl;
 
     while (true) {
-        std::cout << std::endl << "enter the expression: ";
+        // std::cout << std::endl << "enter the expression: ";
+        std::cout << std::endl;
         std::getline(std::cin, input);
         if (input == "q") {
             break;

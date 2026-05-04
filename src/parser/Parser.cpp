@@ -102,7 +102,7 @@ std::unique_ptr<Expression> Parser::parse_function() {
         int size = 0;
         while (!math_token_with_current(TokenTypeEnum::RPAREN)) {
             if (!last_comma) {
-                throw std::runtime_error("Invalid function expression");
+                throw std::runtime_error("invalid function expression");
             }
 
             function_args.push_back(std::move(expression()));
@@ -116,7 +116,7 @@ std::unique_ptr<Expression> Parser::parse_function() {
             throw std::runtime_error("invalid name of function");
         }
     } else {
-        throw std::runtime_error("Invalid bracket expression");
+        throw std::runtime_error("invalid bracket expression");
     }
 }
 
@@ -132,9 +132,9 @@ std::unique_ptr<Expression> Parser::primary() {
         if (math_token_with_current(TokenTypeEnum::RPAREN)) {
             return res;
         } else {
-            throw std::runtime_error("Invalid bracket expression");
+            throw std::runtime_error("invalid bracket expression");
         }
     }
-    throw std::runtime_error("Unexpected token in primary()");
+    throw std::runtime_error("unexpected token in primary()");
 }
 
